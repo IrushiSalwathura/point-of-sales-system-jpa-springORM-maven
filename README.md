@@ -1,4 +1,4 @@
-# POINT OF SALES SYSTEM (LAYERED ARCHITECTURE WITH HIBERNATE AND SPRING ORM)
+# POINT OF SALES SYSTEM (LAYERED ARCHITECTURE WITH JPA(HIBERNATE) AND SPRING ORM)
 
 This POS System is revamped according the Layered Architecture in order to loose couple and  higher the cohesion between the controller and the model of the system. In this project Spring integrates with an ORM framework Hibernate implementation of Java Persistence API (JPA). Therefore, Spring gets to know about JPA and the two frameworks execute parallely. The main advantages of integrating both frameworks will be, less coding is required, Integrated Transaction Management and easy to test.
 
