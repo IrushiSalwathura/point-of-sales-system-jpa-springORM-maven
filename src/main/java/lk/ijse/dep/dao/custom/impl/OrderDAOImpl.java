@@ -5,11 +5,14 @@ import lk.ijse.dep.dao.custom.OrderDAO;
 import lk.ijse.dep.entity.Order;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class OrderDAOImpl extends CrudDAOImpl<Order,String> implements OrderDAO {
     public String getLastOrderId() throws Exception {
-        return (String) getSession().createNativeQuery("SELECT id FROM `Order` ORDER BY id DESC")
-                .setMaxResults(1).list().get(0);
+        List list = entityManager.createQuery("SELECT o.id FROM Order o ORDER BY o.id DESC")
+                .setMaxResults(1).getResultList();
+        return list.size() > 0 ? (String) list.get(0) : null;
     }
 
 }

@@ -1,23 +1,17 @@
 package lk.ijse.dep.dao;
 
 import lk.ijse.dep.entity.SuperEntity;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class CrudDAOImpl<T extends SuperEntity,ID extends Serializable> implements CrudDAO<T,ID> {
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    protected EntityManager entityManager;
     private Class<T> entity;
-
-    @Override
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
 
     protected CrudDAOImpl(){
         entity = (Class<T>)(((ParameterizedType)(this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]);
@@ -25,27 +19,27 @@ public abstract class CrudDAOImpl<T extends SuperEntity,ID extends Serializable>
 
     @Override
     public List<T> findAll() throws Exception {
-        return getSession().createQuery("FROM " + entity.getName()).list();
+        return entityManager.createQuery("FROM " + entity.getName()).getResultList();
     }
 
     @Override
     public T find(ID pk) throws Exception {
-        return (T) getSession().get(entity,pk);
+        return (T) entityManager.find(entity,pk);
     }
 
     @Override
     public void save(T entity) throws Exception {
-        getSession().save(entity);
+        entityManager.persist(entity);
     }
 
     @Override
     public void update(T entity) throws Exception {
-        getSession().update(entity);
+        entityManager.merge(entity);
     }
 
     @Override
     public void delete(ID pk) throws Exception {
-        getSession().delete(getSession().load(entity,pk));
+        entityManager.remove(entityManager.getReference(entity,pk));
     }
 
 }

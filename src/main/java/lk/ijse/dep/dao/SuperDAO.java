@@ -5,5 +5,4 @@ import org.hibernate.Session;
 import java.io.Serializable;
 
 public interface SuperDAO extends Serializable {
-    public Session getSession();
 }

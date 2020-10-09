@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Import;
 
 @ComponentScan(basePackages = "lk.ijse.dep")
 @Configuration
-@Import(HibernateConfig.class)
+@Import(JPAConfig.class)
 public class AppConfig {
 }
